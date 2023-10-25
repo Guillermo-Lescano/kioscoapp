@@ -9,3 +9,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Producto {
+  id Int @id @default(autoincrement())
+  nombre String
+  precio Float
+  imagen String //?si ponemos el signo de pregunta, decimos que este campo puede ser opcional ver documentacion de Prisma
+  categoria Categoria @relation( fields:[categoriaId], references: [id])
+  //relacion y se relaciona con Categoria, luego es una relacion @, en field ponemos el id, y en referencias a que hacemos referencia en la otra tabla
+  categoriaId Int
+}
+
+model Categoria {
+  id Int @id @default(autoincrement())
+  nombre String
+  icono String
+  productos Producto[]
+}
+
+//cada Producto puede tener una categoria, pero cada categoria puede tener muchos Productos
